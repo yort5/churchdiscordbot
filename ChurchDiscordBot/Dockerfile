@@ -4,11 +4,10 @@ FROM mcr.microsoft.com/dotnet/runtime:6.0 AS base
 WORKDIR /app
 
 FROM mcr.microsoft.com/dotnet/sdk:6.0 AS build
-WORKDIR /src
-COPY ["churchdiscordbot/ChurchDiscordBot/ChurchDiscordBot.csproj", "./"]
-RUN dotnet restore "ChurchDiscordBot/ChurchDiscordBot.csproj"
-COPY . .
-WORKDIR "/src/ChurchDiscordBot"
+WORKDIR /build
+COPY ./ ./
+WORKDIR /build/ChurchDiscordBot
+RUN dotnet restore "ChurchDiscordBot.csproj"
 RUN dotnet build "ChurchDiscordBot.csproj" -c Release -o /app/build
 
 FROM build AS publish
