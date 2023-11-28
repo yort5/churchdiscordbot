@@ -16,7 +16,8 @@ steps:
   - task: AzureContainerApps@1
     inputs:
       appSourcePath: '$(Build.SourcesDirectory)/ChurchDiscordBot'
-      azureSubscription: '$(DockerRegistryServiceConnectionId)'
-      acrName: '$(containerRegistry)'
-      containerAppName: 'churchbotcontainer'
+      azureSubscription: 'Visual Studio Enterprise Subscription – MPN(a42da27c-dc48-4347-a7af-02afda3255cd)'
+      acrName: 'churchbotregistry.azurecr.io'
+      containerAppName: 'churchbotcontainerapp'
       resourceGroup: 'churchbotrg'
+      ingress: 'internal'
