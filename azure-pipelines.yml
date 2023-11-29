@@ -17,7 +17,7 @@ steps:
     inputs:
       appSourcePath: '$(Build.SourcesDirectory)/ChurchDiscordBot'
       azureSubscription: 'Visual Studio Enterprise Subscription – MPN(a42da27c-dc48-4347-a7af-02afda3255cd)'
-      acrName: 'churchbotregistry.azurecr.io'
+      acrName: 'ca4b9dead13bacr.azurecr.io'
       containerAppName: 'churchbotcontainerapp'
       resourceGroup: 'churchbotrg'
       ingress: 'internal'
