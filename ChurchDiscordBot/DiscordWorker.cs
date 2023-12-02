@@ -88,7 +88,7 @@ namespace ChurchDiscordBot
                     }
                     catch (Exception exc)
                     {
-                        _logger.LogError($"Exception trying to update nickname: {exc.Message}");
+                        _logger.LogError($"Exception to get song: {exc.Message}");
                     }
 
                     // only do these once a day
@@ -114,8 +114,8 @@ namespace ChurchDiscordBot
         {
             //var request = new HttpRequestMessage(HttpMethod.Get);
 
-            using var browserFetcher = new BrowserFetcher();
-            await browserFetcher.DownloadAsync();
+            //using var browserFetcher = new BrowserFetcher();
+            //await browserFetcher.DownloadAsync();
             await using var browser = await Puppeteer.LaunchAsync(
                            new LaunchOptions { Headless = true });
             await using var page = await browser.NewPageAsync();
