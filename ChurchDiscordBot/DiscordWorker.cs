@@ -97,6 +97,9 @@ namespace ChurchDiscordBot
                     {
                         lastUpdatedTicks = currentDayTicks;
                     }
+
+                    // ... and rest!
+                    await Task.Delay(TimeSpan.FromSeconds(60), stoppingToken);
                 }
             }
             catch (Exception exc)
