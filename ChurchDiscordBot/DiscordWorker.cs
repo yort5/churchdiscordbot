@@ -69,6 +69,7 @@ namespace ChurchDiscordBot
                     try
                     {
                         var ltnSong = await GetLtnSong();
+                        _logger.LogInformation($"Retrieved information for song {ltnSong.currenttrack.title}.");
                         if (ltnSong != null && lastPostedTrack != ltnSong.currenttrack.title)
                         {
                             var trackEmbed = new EmbedBuilder
@@ -104,7 +105,7 @@ namespace ChurchDiscordBot
             }
             catch (Exception exc)
             {
-                _logger.LogError(exc.Message);
+                _logger.LogError($"Exception in main loop: {exc.Message}");
             }
 
             _logger.LogInformation("DiscordService has stopped.");
