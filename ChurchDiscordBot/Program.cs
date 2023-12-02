@@ -1,4 +1,3 @@
-using Azure.Identity;
 using ChurchDiscordBot;
 using ChurchDiscordBot.Configuration;
 using Microsoft.Extensions.Configuration.AzureAppConfiguration;
@@ -6,14 +5,12 @@ using Microsoft.Extensions.Configuration.AzureAppConfiguration;
 var builder = Host.CreateApplicationBuilder(args);
 
 // Retrieve the connection string
-string appConfigEndpoint = builder.Configuration.GetConnectionString("AzureAppConfigurationEndpoint") ?? string.Empty;
+string connectionString = builder.Configuration.GetConnectionString("AzureAppConfigurationEndpoint") ?? string.Empty;
 
 // Load configuration from Azure App Configuration
 builder.Configuration.AddAzureAppConfiguration(options =>
 {
-    options.Connect(
-        new Uri(appConfigEndpoint),
-        new DefaultAzureCredential())
+    options.Connect(connectionString)
         // Load configuration values with no label
         .Select(KeyFilter.Any, "ChurchBot");
 });
