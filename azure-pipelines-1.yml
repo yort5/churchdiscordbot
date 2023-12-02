@@ -1,0 +1,16 @@
+trigger:
+  branches:
+    include:
+      - main
+
+pool:
+  vmImage: ubuntu-latest
+
+steps:
+  - task: AzureContainerApps@1
+    inputs:
+      appSourcePath: '$(Build.SourcesDirectory)/ChurchDiscordBot'
+      azureSubscription: 'churchbot-service-connection'
+      acrName: 'ca4b9dead13bacr.azurecr.io'
+      containerAppName: 'churchbotcontainer'
+      resourceGroup: 'churchbotrg'
