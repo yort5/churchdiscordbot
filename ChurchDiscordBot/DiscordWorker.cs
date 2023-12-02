@@ -117,7 +117,14 @@ namespace ChurchDiscordBot
             //using var browserFetcher = new BrowserFetcher();
             //await browserFetcher.DownloadAsync();
             await using var browser = await Puppeteer.LaunchAsync(
-                           new LaunchOptions { Headless = true });
+                           new LaunchOptions
+                           {
+                                Headless = true,
+                                Args = new[]
+                                {
+                                    "--no-sandbox"
+                                }
+                           });
             await using var page = await browser.NewPageAsync();
             await page.GoToAsync("https://api.live365.com/station/a65452");
             var pageContent = await page.GetContentAsync();
