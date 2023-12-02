@@ -18,6 +18,6 @@ steps:
       appSourcePath: '$(Build.SourcesDirectory)/ChurchDiscordBot'
       azureSubscription: 'churchbot-service-connection'
       acrName: 'ca4b9dead13bacr.azurecr.io'
-      containerAppName: 'churchbotcontainerapp'
+      containerAppName: 'churchbotcontainer'
       resourceGroup: 'churchbotrg'
       ingress: 'internal'
