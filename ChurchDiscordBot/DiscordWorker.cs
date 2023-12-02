@@ -100,7 +100,7 @@ namespace ChurchDiscordBot
                     }
 
                     // ... and rest!
-                    await Task.Delay(TimeSpan.FromSeconds(60), stoppingToken);
+                    await Task.Delay(TimeSpan.FromSeconds(30), stoppingToken);
                 }
             }
             catch (Exception exc)
