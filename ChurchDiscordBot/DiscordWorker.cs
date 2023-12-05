@@ -138,6 +138,7 @@ namespace ChurchDiscordBot
         }
     }
 
+#pragma warning disable CS8618
     public class LtnSongInfo
     {
         public string name { get; set; }
