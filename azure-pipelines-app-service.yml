@@ -5,7 +5,7 @@ resources:
 - repo: self
 
 variables: 
-  dockerfilePath: '$(Build.SourcesDirectory)/Dockerfile'
+  dockerfilePath: '$(Build.SourcesDirectory)/ChurchDiscordBot/Dockerfile'
   tag: '$(Build.BuildId)'
 
   vmImageName: 'ubuntu-latest'
