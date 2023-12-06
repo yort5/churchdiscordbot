@@ -60,15 +60,16 @@ namespace ChurchDiscordBot
 
                 var lastUpdatedTicks = DateTime.MinValue.ToUniversalTime().Ticks;
                 var mediaChannelId = (ulong)_config?.Discord?.MediaChannelsIds.FirstOrDefault();
-                var testLtnChannel = _client.GetChannel(mediaChannelId) as IMessageChannel;
+                var testLtnChannel = await _client.GetChannelAsync(mediaChannelId) as IMessageChannel;
                 string lastPostedTrack = string.Empty;
+                await testLtnChannel.SendMessageAsync($"It's ALIVE ({DateTime.Now})");
 
                 while (!stoppingToken.IsCancellationRequested)
                 {
                     _logger.LogInformation("DiscordBot is doing background work.");
                     try
                     {
-                        var ltnSong = await GetLtnSong();
+                        var ltnSong = await GetLtnSongAsync();
                         _logger.LogInformation($"Retrieved information for song {ltnSong.currenttrack.title}.");
                         if (ltnSong != null && lastPostedTrack != ltnSong.currenttrack.title)
                         {
@@ -111,7 +112,7 @@ namespace ChurchDiscordBot
             _logger.LogInformation("DiscordService has stopped.");
         }
 
-        public async Task<LtnSongInfo> GetLtnSong()
+        public async Task<LtnSongInfo> GetLtnSongAsync()
         {
             //var request = new HttpRequestMessage(HttpMethod.Get);
 
@@ -134,7 +135,7 @@ namespace ChurchDiscordBot
 
             var jsonContent = pageContent.Substring(startIndex, endIndex - startIndex + 1);
 
-            return JsonConvert.DeserializeObject<LtnSongInfo>(jsonContent);
+            return JsonConvert.DeserializeObject<LtnSongInfo>(jsonContent) ?? new LtnSongInfo();
         }
     }
 
