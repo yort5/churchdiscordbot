@@ -5,7 +5,7 @@ using Microsoft.Extensions.Configuration.AzureAppConfiguration;
 var builder = Host.CreateApplicationBuilder(args);
 
 // Retrieve the connection string
-string connectionString = builder.Configuration.GetConnectionString("Azure:AppConfiguration") ?? string.Empty;
+var connectionString = builder.Configuration.GetValue<string>("Azure:AppConfiguration:ConnectionString") ?? string.Empty;
 
 // Load configuration from Azure App Configuration
 builder.Configuration.AddAzureAppConfiguration(options =>
