@@ -6,7 +6,7 @@ resources:
 
 variables: 
   ## Add this under variables section in the pipeline
-  dockerfilePath: '$(Build.SourcesDirectory)/Dockerfile'
+  dockerfilePath: '$(Build.SourcesDirectory)/ChurchDiscordBot/Dockerfile'
   tag: '$(Build.BuildId)'
 
   vmImageName: 'ubuntu-latest'
