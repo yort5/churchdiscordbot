@@ -18,11 +18,11 @@ var builder = WebApplication.CreateBuilder(args);
 //builder.Services.AddSingleton<HostConfig>(hostConfig);
 
 // Add services to the container.
-builder.Services.AddRazorPages();
-builder.Services.AddHttpClient("LTN", c =>
-{
-    c.BaseAddress = new Uri("https://api.live365.com/");
-});
+//builder.Services.AddRazorPages();
+//builder.Services.AddHttpClient("LTN", c =>
+//{
+//    c.BaseAddress = new Uri("https://api.live365.com/");
+//});
 // builder.Services.AddHostedService<DiscordWorker>();
 
 var app = builder.Build();
