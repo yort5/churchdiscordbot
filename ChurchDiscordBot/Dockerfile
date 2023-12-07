@@ -7,8 +7,9 @@ EXPOSE 443
 
 FROM mcr.microsoft.com/dotnet/sdk:6.0 AS build
 WORKDIR /src
-COPY ["ChurchDiscordBot/ChurchDiscordBot.csproj", "ChurchDiscordBot/"]
-RUN dotnet restore "ChurchDiscordBot/ChurchDiscordBot.csproj"
+COPY ["ChurchDiscordBot.csproj", "ChurchDiscordBot/"]
+WORKDIR "/src/ChurchDiscordBot"
+RUN dotnet restore "ChurchDiscordBot.csproj"
 COPY . .
 WORKDIR "/src/ChurchDiscordBot"
 RUN dotnet build "ChurchDiscordBot.csproj" -c Release -o /app/build
