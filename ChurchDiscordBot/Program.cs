@@ -1,8 +1,5 @@
 using ChurchDiscordBot;
 using ChurchDiscordBot.Configuration;
-using ChurchDiscordBot.Data;
-using Microsoft.AspNetCore.Components;
-using Microsoft.AspNetCore.Components.Web;
 using Microsoft.Extensions.Configuration.AzureAppConfiguration;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -22,8 +19,6 @@ var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddRazorPages();
-builder.Services.AddServerSideBlazor();
-builder.Services.AddSingleton<WeatherForecastService>();
 builder.Services.AddHttpClient("LTN", c =>
 {
     c.BaseAddress = new Uri("https://api.live365.com/");
@@ -41,12 +36,12 @@ if (!app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
-
 app.UseStaticFiles();
 
 app.UseRouting();
 
-app.MapBlazorHub();
-app.MapFallbackToPage("/_Host");
+app.UseAuthorization();
+
+app.MapRazorPages();
 
 app.Run();
