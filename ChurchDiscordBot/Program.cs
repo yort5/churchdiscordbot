@@ -8,17 +8,17 @@ using Microsoft.Extensions.Configuration.AzureAppConfiguration;
 var builder = WebApplication.CreateBuilder(args);
 
 // Retrieve the connection string
-var connectionString = builder.Configuration.GetValue<string>("Azure:AppConfiguration:ConnectionString") ?? string.Empty;
+//var connectionString = builder.Configuration.GetValue<string>("Azure:AppConfiguration:ConnectionString") ?? string.Empty;
 
-// Load configuration from Azure App Configuration
-builder.Configuration.AddAzureAppConfiguration(options =>
-{
-    options.Connect(connectionString)
-        // Load configuration values with no label
-        .Select(KeyFilter.Any, "ChurchBot");
-});
-var hostConfig = builder.Configuration.Get<HostConfig>();
-builder.Services.AddSingleton<HostConfig>(hostConfig);
+//// Load configuration from Azure App Configuration
+//builder.Configuration.AddAzureAppConfiguration(options =>
+//{
+//    options.Connect(connectionString)
+//        // Load configuration values with no label
+//        .Select(KeyFilter.Any, "ChurchBot");
+//});
+//var hostConfig = builder.Configuration.Get<HostConfig>();
+//builder.Services.AddSingleton<HostConfig>(hostConfig);
 
 // Add services to the container.
 builder.Services.AddRazorPages();
@@ -28,7 +28,7 @@ builder.Services.AddHttpClient("LTN", c =>
 {
     c.BaseAddress = new Uri("https://api.live365.com/");
 });
-builder.Services.AddHostedService<DiscordWorker>();
+// builder.Services.AddHostedService<DiscordWorker>();
 
 var app = builder.Build();
 
