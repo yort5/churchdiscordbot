@@ -39,7 +39,7 @@ namespace ChurchDiscordBot.Applet.Radio
             songList.Add(currentTrack);
             if(songList.Count > 5)
             {
-                songList.Remove( songList.OrderByDescending(s => s.start).First() );
+                songList.Remove( songList.OrderBy(s => s.start).First() );
             }
 
             // send the song to Discord
