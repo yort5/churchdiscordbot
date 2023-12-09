@@ -9,5 +9,7 @@ namespace ChurchDiscordBot.Configuration
     public class HostConfig
     {
         public DiscordConfig? Discord { get; set; }
+
+        public AppletConfig? Applet { get; set; }
     }
 }
