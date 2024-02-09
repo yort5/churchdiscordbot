@@ -54,7 +54,7 @@ namespace ChurchDiscordBot.Applet.Radio
                 var trackSpan = TimeSpan.FromSeconds(currentTrack.duration);
                 var timeText = trackSpan.Hours == 0 ? string.Format($"{trackSpan.Minutes}:{trackSpan.Seconds}") : string.Format($"{trackSpan.Hours}:{trackSpan.Minutes}:{trackSpan.Seconds}");
                 trackEmbed
-                .AddField(currentTrack.title, string.Empty)
+                .AddField(currentTrack.title, "-------")
                     //.AddField("Die stats", communityCardInfo.StatLine)
                     .WithFooter(footer => footer.Text = timeText);
 
