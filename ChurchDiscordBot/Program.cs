@@ -12,13 +12,6 @@ if(string.IsNullOrEmpty(connectionString))
     connectionString = builder.Configuration.GetConnectionString("AzureAppConfigurationEndpoint") ?? "DIDNOTWORK";
 }
 
-// Load configuration from Azure App Configuration
-builder.Configuration.AddAzureAppConfiguration(options =>
-{
-    options.Connect(connectionString)
-        // Load configuration values with no label
-        .Select(KeyFilter.Any, "ChurchBot");
-});
 var hostConfig = builder.Configuration.Get<HostConfig>();
 builder.Services.AddSingleton<HostConfig>(hostConfig);
 

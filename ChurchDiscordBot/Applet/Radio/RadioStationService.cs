@@ -1,4 +1,5 @@
 ﻿using ChurchDiscordBot.Configuration;
+using ChurchDiscordBot.Helpers;
 using Discord;
 using Discord.WebSocket;
 using Newtonsoft.Json;
@@ -24,44 +25,52 @@ namespace ChurchDiscordBot.Applet.Radio
             {
                 var currentStationInfo = await GetStationInfoAsync(stationConfig);
                 var currentTrack = currentStationInfo.currenttrack;
-                _logger.LogInformation($"Retrieved information for song {currentTrack.title}.");
-
-                var songList = _trackHistory.SingleOrDefault(t => t.Key == stationConfig.Name).Value;
-                if (songList == null)
+                if (currentTrack is null)
                 {
-                    songList = new List<CurrentTrack>();
-                    _trackHistory.Add(stationConfig.Name, songList);
+                    _logger.LogInformation($"No information found for song (current track is null) ({stationConfig.Name}).");
                 }
-
-                if (songList.Any(s => s.title == currentTrack.title))
+                else
                 {
-                    return; // track is not new
-                }
+                    _logger.LogInformation($"Retrieved information for song {currentTrack.title}.");
 
-                songList.Add(currentTrack);
-                if (songList.Count > 5)
-                {
-                    songList.Remove(songList.OrderBy(s => s.start).First());
-                }
+                    var songList = _trackHistory.SingleOrDefault(t => t.Key == stationConfig.Name).Value;
+                    if (songList == null)
+                    {
+                        songList = new List<CurrentTrack>();
+                        _trackHistory.Add(stationConfig.Name, songList);
+                    }
 
-                // send the song to Discord
-                var trackEmbed = new EmbedBuilder
-                {
-                    Title = $"{currentTrack.artist}",
-                    ThumbnailUrl = currentTrack.art
-                };
+                    if (songList.Any(s => s.title == currentTrack.title))
+                    {
+                        return; // track is not new
+                    }
 
-                var trackSpan = TimeSpan.FromSeconds(currentTrack.duration);
-                var timeText = trackSpan.Hours == 0 ? string.Format($"{trackSpan.Minutes}:{trackSpan.Seconds}") : string.Format($"{trackSpan.Hours}:{trackSpan.Minutes}:{trackSpan.Seconds}");
-                trackEmbed
-                .AddField(currentTrack.title, "-------")
-                    //.AddField("Die stats", communityCardInfo.StatLine)
-                    .WithFooter(footer => footer.Text = timeText);
+                    songList.Add(currentTrack);
+                    if (songList.Count > 5)
+                    {
+                        songList.Remove(songList.OrderBy(s => s.start).First());
+                    }
 
-                foreach (var channelId in stationConfig.MediaChannelsIds)
-                {
-                    var mediaChannel = await client.GetChannelAsync(channelId) as IMessageChannel;
-                    await mediaChannel.SendMessageAsync(embed: trackEmbed.Build());
+                    // send the song to Discord
+                    var trackEmbed = new EmbedBuilder
+                    {
+                        Title = $"{currentTrack.artist}",
+                        ThumbnailUrl = currentTrack.art
+                    };
+
+                    var trackSpan = TimeSpan.FromSeconds(currentTrack.duration);
+                    var timeText = trackSpan.Hours == 0 ? string.Format($"{trackSpan.Minutes}:{trackSpan.Seconds}") : string.Format($"{trackSpan.Hours}:{trackSpan.Minutes}:{trackSpan.Seconds}");
+                    trackEmbed
+                    .AddField(currentTrack.title, "-------")
+                        //.AddField("Die stats", communityCardInfo.StatLine)
+                        .WithFooter(footer => footer.Text = timeText);
+
+                    var mediaChannelIds = ConfigParser.ParseIdsFromString(stationConfig.MediaChannels);
+                    foreach (var channelId in mediaChannelIds)
+                    {
+                        var mediaChannel = await client.GetChannelAsync(channelId) as IMessageChannel;
+                        await mediaChannel.SendMessageAsync(embed: trackEmbed.Build());
+                    }
                 }
             }
             catch (Exception ex)

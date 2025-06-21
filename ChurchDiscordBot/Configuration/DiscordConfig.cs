@@ -6,12 +6,5 @@ namespace ChurchDiscordBot.Configuration
     {
         public string Token { get; set; }
         public string MediaChannelsString { get; set; }
-        public List<ulong> MediaChannelsIds
-        {
-            get
-            {
-                return ConfigParser.ParseIdsFromString(MediaChannelsString);
-            }
-        }
     }
 }
