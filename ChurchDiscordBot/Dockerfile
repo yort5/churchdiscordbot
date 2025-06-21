@@ -8,7 +8,7 @@ WORKDIR /src
 COPY ["ChurchDiscordBot.csproj", "."]
 WORKDIR "/src/ChurchDiscordBot"
 RUN dotnet restore "ChurchDiscordBot.csproj"
-COPY ChurchDiscordBot/. .
+COPY . .
 RUN dotnet build "ChurchDiscordBot.csproj" -c Release -o /app/build
 
 FROM build AS publish
