@@ -6,7 +6,6 @@ EXPOSE 443
 FROM mcr.microsoft.com/dotnet/sdk:8.0 AS build
 WORKDIR /src
 COPY ["ChurchDiscordBot.csproj", "."]
-WORKDIR "/src/ChurchDiscordBot"
 RUN dotnet restore "ChurchDiscordBot.csproj"
 COPY . .
 RUN dotnet build "ChurchDiscordBot.csproj" -c Release -o /app/build
@@ -16,9 +15,7 @@ RUN dotnet publish "ChurchDiscordBot.csproj" -c Release -o /app/publish /p:UseAp
 
 FROM base AS final
 
-#####################
-#PUPPETEER RECIPE
-#####################
+# Puppeteer recipe
 RUN apt-get update && apt-get install gnupg wget -y && \
   wget --quiet --output-document=- https://dl-ssl.google.com/linux/linux_signing_key.pub | gpg --dearmor > /etc/apt/trusted.gpg.d/google-archive.gpg && \
   sh -c 'echo "deb [arch=amd64] http://dl.google.com/linux/chrome/deb/ stable main" >> /etc/apt/sources.list.d/google.list' && \
