@@ -75,8 +75,11 @@ namespace ChurchDiscordBot
                     _logger.LogInformation("DiscordBot is doing background work.");
                     try
                     {
+                        _logger.LogInformation($"Discord Token= {_config?.Discord?.Token}");
+                        _logger.LogInformation($"Radio Config count= {_config?.Applet?.RadioStations?.Count ?? 0}");
                         foreach (var radioStation in _config.Applet.RadioStations)
                         {
+                            _logger.LogInformation($"Station Name= {radioStation.Name}, ID= {radioStation.Identifier}, channels= {radioStation.MediaChannels}");
                             await _radioStationService.CheckForNewSongAsync(radioStation, _client);
                         }
                     }
